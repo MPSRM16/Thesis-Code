@@ -43,8 +43,8 @@ python mgf_splitter.py \
 
   * contains `phospho` → `phospho`
   * contains `oxidation` → `oxidation`
-  * contains `k_gg` or `ubiquitin` → `k_gg`
-  * contains `k_ac` or `acetyl` → `k_ac`
+  * contains `k_gg` a.k.a `ubiquitination` → `k_gg`
+  * contains `k_ac` or `acetylation` → `k_ac`
   * otherwise → `unmodified`&#x20;
 
 ## Example
