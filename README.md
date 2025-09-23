@@ -84,10 +84,7 @@ python mgf_splitter.py \
 
 ## Notes & Limitations
 
-* **Labeling depends on `TITLE` text.** If your upstream pipeline uses different strings, update `label_spectrum()` accordingly. Controlled vocabularies are not enforced.&#x20;
+* **Labeling depends on `TITLE` text.** If your upstream pipeline uses different strings, update `label_spectrum()` accordingly. Controlled vocabularies are not enforced, the labels used are based on the ones of the annotated spectra we used during the tranning and development of the model.&#x20;
 * **Balance is approximate.** Extremely skewed datasets cannot be perfectly balanced per file; the script will warn you.&#x20;
 * **Compatible with DatasetHandler** setups that expect a *directory of `.mgf` files* rather than one huge file.
 
-## License
-
-Add your preferred license here.
