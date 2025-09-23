@@ -8,7 +8,7 @@ A small command-line tool to split a large `.mgf` file into multiple smaller `.m
 
 * Reads one big `.mgf`, writes multiple `split_file_XXX.mgf` outputs.
 * Tries to keep per-file class balance based on observed proportions.
-* Interactive prompt recommends \~1200 spectra per file (you can override).&#x20;
+* Interactive prompt recommends minium \~1200 spectra per file (you can and should if you have high level computational resources override).&#x20;
 * Simple, no external dependencies (pure Python).
 
 ## Requirements
