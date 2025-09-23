@@ -1,7 +1,4 @@
 # Thesis-Code
-Awesome—here’s a tidy, copy-paste-ready README section for your repo. It’s minimal, practical, and matches what your script actually does.
-
----
 
 # MGF Splitter (balanced by PTM labels)
 
