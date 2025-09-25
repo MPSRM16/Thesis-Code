@@ -85,3 +85,77 @@ python mgf_splitter.py \
 * **Balance is approximate.** Extremely skewed datasets cannot be perfectly balanced per file; the script will warn you.&#x20;
 * **Compatible with DatasetHandler** setups that expect a *directory of `.mgf` files* rather than one huge file.
 
+
+# MS/MS Spectra Modification Classifier (Transformer-based)
+
+This repository accompanies my master’s thesis and provides two Google-Colab-ready notebooks (exported as `.py`) for detecting and classifying post-translational modifications (PTMs) directly from shotgun proteomics MS/MS spectra. Both implement a hybrid CNN→Transformer architecture with precursor-mass fusion.  
+
+## Contents
+
+* `final_3_class_model.py` — three-category pipeline (Unmodified, Oxidation, Phosphorylation). It uses a one-vs-rest head design (sigmoid logits), while the current labeler maps each spectrum to a single class. This enables multi-label experiments without changing the backbone. 
+* `final_5_class_model.py` — five-category pipeline (adds Ubiquitination and Acetylation) with a single softmax head (CrossEntropy). 
+
+> Note: These files are exported from Colab; they retain the original narrative markdown and cell structure to facilitate academic reproducibility. This README is intentionally brief.
+
+## Method (brief)
+
+**Input & parsing.** Spectra are read from `.mgf` files; required fields include `TITLE`, `PEPMASS`, and `CHARGE`. A streaming `DatasetHandler` loads one file at a time to control memory footprint.  
+
+**Preprocessing.** Peaks are binned over a fixed m/z range into dense 1D vectors, with *sliding-window normalization* to preserve local signal while damping region-dominant intensities.  
+
+**Precursor handling.** Observed precursor m/z is converted to monoisotopic neutral mass (given charge) and min–max normalized to $0,1$; missing metadata defaults safely.  
+
+**Architecture.** A 1D-CNN encoder extracts local patterns; features are projected, enhanced with sinusoidal positional encoding, and passed through a Transformer encoder. A small MLP encodes the normalized parent-ion feature; fusion occurs by concatenation before classification. In the 3-class file, classification uses independent heads; in the 5-class file, a single linear head outputs `num_classes` logits.  
+
+**Labeling.** Heuristic labels are inferred from `TITLE`: “oxidation” → Oxidation; “phospho” → Phosphorylation; (5-class only) “k_gg” → Ubiquitination; “k_ac” → Acetylation; otherwise Unmodified.  
+
+## Quick start (Colab)
+
+1. **Open in Colab** and run the introductory cell to mount Drive:
+
+   ```python
+   from google.colab import drive
+   drive.mount('/content/drive')
+   ```
+2. **Prepare Drive folders** (or adjust paths in the code):
+
+   ```
+   MyDrive/
+   ├── data/
+   │   └── balanced_dataset/      # .mgf files
+   └── peak_encoder_transformer_pipeline/
+       ├── model_weights/
+       └── logs/
+   ```
+
+   The notebooks include `os.makedirs(...)` helpers and path variables you can edit near the top.  
+3. **Run cells sequentially** (parsing → preprocessing → model → training/evaluation). Check the in-notebook logging for progress and metrics. Model weights and logs are persisted to the paths you configure. 
+
+## Running locally (optional)
+
+* Python ≥3.10 is recommended. Install core deps:
+
+  ```bash
+  pip install torch numpy scikit-learn matplotlib
+  ```
+* GPU acceleration is advised for training. You can execute the `.py` files as literate notebooks using Jupytext or open them in VS Code/PyCharm and run cell blocks.
+
+## Training & evaluation
+
+* **Imbalance handling.** The 3-class file uses independent sigmoid logits with BCE (weights supported); the 5-class file uses `CrossEntropyLoss` (optionally class-weighted). L1 regularization is available.  
+* **Checkpointing & logs.** Checkpoints and `.log` files are written to your Drive under the configured directories. 
+
+## Notes & limitations
+
+* The current Transformer operates on a *global* embedding (one token). To model longer-range dependencies explicitly, the temporal feature map can be fed as a sequence prior to flattening.  
+* Label inference depends on consistent `TITLE` conventions; verify dataset naming to avoid silent mislabeling (especially for `k_gg` / `k_ac`). 
+
+## Reuse & citation
+
+If you build upon this codebase in academic work, please cite the thesis associated with this repository and reference the specific notebook you used (3-class or 5-class). A BibTeX entry for the thesis can be added here upon publication.
+
+## License
+
+Code is released for academic use. If you intend to use it commercially, please contact me.
+
+---
