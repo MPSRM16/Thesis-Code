@@ -147,15 +147,16 @@ This repository accompanies my master’s thesis and provides two Google-Colab-r
 
 ## Notes & limitations
 
-* The current Transformer operates on a *global* embedding (one token). To model longer-range dependencies explicitly, the temporal feature map can be fed as a sequence prior to flattening.  
 * Label inference depends on consistent `TITLE` conventions; verify dataset naming to avoid silent mislabeling (especially for `k_gg` / `k_ac`). 
 
-## Reuse & citation
-
-If you build upon this codebase in academic work, please cite the thesis associated with this repository and reference the specific notebook you used (3-class or 5-class). A BibTeX entry for the thesis can be added here upon publication.
-
-## License
-
-Code is released for academic use. If you intend to use it commercially, please contact me.
+Got it — I’ll keep the spotlight on the splitter and models, and add only a short note at the end about the extra utilities. Append this to your README:
 
 ---
+
+## Extras (brief)
+
+**K-fold cross-validation.** Optional scripts to run (stratified) K-fold CV on your balanced `.mgf` splits, preserving PTM label proportions across folds. Works with both `final_3_class_model.py` and `final_5_class_model.py`, emitting per-fold metrics and an aggregated report.
+
+**Optuna hyperparameter tuning.** Reproducible studies for key knobs (e.g., learning rate, weight decay, CNN channels, Transformer depth/heads, dropout, batch size). Includes pruning, best-trial checkpointing, and simple logging.
+
+These utilities are optional and lightweight—they don’t change the core splitter or model pipelines. Check the repository’s scripts for quick usage examples.
