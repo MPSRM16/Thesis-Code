@@ -149,11 +149,8 @@ This repository accompanies my master’s thesis and provides two Google-Colab-r
 
 * Label inference depends on consistent `TITLE` conventions; verify dataset naming to avoid silent mislabeling (especially for `k_gg` / `k_ac`). 
 
-Got it — I’ll keep the spotlight on the splitter and models, and add only a short note at the end about the extra utilities. Append this to your README:
 
----
-
-## Extras (brief)
+## Extras
 
 **K-fold cross-validation.** Optional scripts to run (stratified) K-fold CV on your balanced `.mgf` splits, preserving PTM label proportions across folds. Works with both `final_3_class_model.py` and `final_5_class_model.py`, emitting per-fold metrics and an aggregated report.
 
