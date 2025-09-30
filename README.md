@@ -169,15 +169,6 @@ Each directory matches what `DatasetHandler` expects (a **folder of `.mgf` files
 - contains `k_ac` or `acetylation` → `Acetylation` (5-class only)
 - otherwise → `Unmodified`
 
-### How to use
-
-**Colab:**
-```python
-DATA_DIR = '/content/drive/MyDrive/data/mini_dataset_3_class'  # or mini_dataset_5_class
-SAVE_ROOT = '/content/drive/MyDrive/peak_encoder_transformer_pipeline'
-MODEL_DIR = f'{SAVE_ROOT}/model_weights'
-LOG_DIR = f'{SAVE_ROOT}/logs'
-```
 
 ## Extras
 
