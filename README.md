@@ -95,6 +95,8 @@ This repository accompanies my master’s thesis and provides two Google-Colab-r
 * `final_3_class_model.py` — three-category pipeline (Unmodified, Oxidation, Phosphorylation). It uses a one-vs-rest head design (sigmoid logits), while the current labeler maps each spectrum to a single class. This enables multi-label experiments without changing the backbone. 
 * `final_5_class_model.py` — five-category pipeline (adds Ubiquitination and Acetylation) with a single softmax head (CrossEntropy). 
 
+* `mini_dataset_3_class/` & `mini_dataset_5_class/` — 14-file mini datasets for quick tests and CI-style sanity checks.
+
 > Note: These files are exported from Colab; they retain the original narrative markdown and cell structure to facilitate academic reproducibility. This README is intentionally brief.
 
 ## Method (brief)
@@ -120,12 +122,15 @@ This repository accompanies my master’s thesis and provides two Google-Colab-r
 2. **Prepare Drive folders** (or adjust paths in the code):
 
    ```
-   MyDrive/
-   ├── data/
-   │   └── balanced_dataset/      # .mgf files
-   └── peak_encoder_transformer_pipeline/
-       ├── model_weights/
-       └── logs/
+    MyDrive/
+    ├── data/
+    │   ├── balanced_dataset/          # your full .mgf splits
+    │   ├── mini_dataset_3_class/      # 14 mini .mgf files (Unmod/Ox/Phospho)
+    │   └── mini_dataset_5_class/      # 14 mini .mgf files (+ Ubiquitination, Acetylation)
+    └── peak_encoder_transformer_pipeline/
+        ├── model_weights/
+        └── logs/
+
    ```
 
    The notebooks include `os.makedirs(...)` helpers and path variables you can edit near the top.  
@@ -149,6 +154,30 @@ This repository accompanies my master’s thesis and provides two Google-Colab-r
 
 * Label inference depends on consistent `TITLE` conventions; verify dataset naming to avoid silent mislabeling (especially for `k_gg` / `k_ac`). 
 
+
+## Mini datasets (14 files each)
+
+To enable fast demos, CI checks, and quick experiments, the repo includes **two curated mini datasets**, each with **14 small `.mgf` files**:
+
+- `mini_dataset_3_class/` — for the 3-class pipeline (Unmodified, Oxidation, Phosphorylation).
+- `mini_dataset_5_class/` — for the 5-class pipeline (adds Ubiquitination `k_gg` and Acetylation `k_ac`).
+
+Each directory matches what `DatasetHandler` expects (a **folder of `.mgf` files**). Labels follow the project’s `TITLE` rules:
+- contains `phospho` → `Phosphorylation`
+- contains `oxidation` → `Oxidation`
+- contains `k_gg` → `Ubiquitination` (5-class only)
+- contains `k_ac` or `acetylation` → `Acetylation` (5-class only)
+- otherwise → `Unmodified`
+
+### How to use
+
+**Colab:**
+```python
+DATA_DIR = '/content/drive/MyDrive/data/mini_dataset_3_class'  # or mini_dataset_5_class
+SAVE_ROOT = '/content/drive/MyDrive/peak_encoder_transformer_pipeline'
+MODEL_DIR = f'{SAVE_ROOT}/model_weights'
+LOG_DIR = f'{SAVE_ROOT}/logs'
+```
 
 ## Extras
 
