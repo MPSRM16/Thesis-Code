@@ -2,7 +2,7 @@
 
 # MGF Splitter (balanced by PTM labels)
 
-A small command-line tool to split a large `.mgf` file into multiple smaller `.mgf` files while **preserving the class proportions** of spectra (by PTM label) in each split. Labels are inferred from the `TITLE` line (e.g., `phospho`, `oxidation`, `k_gg`, `k_ac`; anything else becomes `unmodified`). This is designed to create input chunks ready for your `DatasetHandler` class that consumes folders of `.mgf` files.&#x20;
+A small command-line tool to split a large `.mgf` file into multiple smaller `.mgf` files while **preserving the class proportions** of spectra (by PTM label) in each split. Labels are inferred from the `TITLE` line (e.g., `phospho`, `oxidation`, `K_GG`, `K_Ac`; anything else becomes `unmodified`). This is designed to create input chunks ready for your `DatasetHandler` class that consumes folders of `.mgf` files.&#x20;
 
 ## Features
 
@@ -43,8 +43,8 @@ python mgf_splitter.py \
 
   * contains `phospho` → `phospho`
   * contains `oxidation` → `oxidation`
-  * contains `k_gg` a.k.a `ubiquitination` → `k_gg`
-  * contains `k_ac` or `acetylation` → `k_ac`
+  * contains `k_GG` a.k.a `ubiquitination` → `k_GG`
+  * contains `k_Ac` or `acetylation` → `k_Ac`
   * otherwise → `unmodified`&#x20;
 
 ## Example
@@ -160,13 +160,13 @@ This repository accompanies my master’s thesis and provides two Google-Colab-r
 To enable fast demos, CI checks, and quick experiments, the repo includes **two curated mini datasets**, each with **14 small `.mgf` files**:
 
 - `mini_dataset_3_class/` — for the 3-class pipeline (Unmodified, Oxidation, Phosphorylation).
-- `mini_dataset_5_class/` — for the 5-class pipeline (adds Ubiquitination `k_gg` and Acetylation `k_ac`).
+- `mini_dataset_5_class/` — for the 5-class pipeline (adds Ubiquitination `K_GG` and Acetylation `k_GG`).
 
 Each directory matches what `DatasetHandler` expects (a **folder of `.mgf` files**). Labels follow the project’s `TITLE` rules:
 - contains `phospho` → `Phosphorylation`
 - contains `oxidation` → `Oxidation`
-- contains `k_gg` → `Ubiquitination` (5-class only)
-- contains `k_ac` or `acetylation` → `Acetylation` (5-class only)
+- contains `k_GG` → `Ubiquitination` (5-class only)
+- contains `K_Ac` or `acetylation` → `Acetylation` (5-class only)
 - otherwise → `Unmodified`
 
 
