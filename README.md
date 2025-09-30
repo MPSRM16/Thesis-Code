@@ -155,7 +155,7 @@ This repository accompanies my master’s thesis and provides two Google-Colab-r
 * Label inference depends on consistent `TITLE` conventions; verify dataset naming to avoid silent mislabeling (especially for `k_gg` / `k_ac`). 
 
 
-## Mini datasets (14 files each)
+## Mini datasets (14 files total)
 
 To enable fast demos, CI checks, and quick experiments, the repo includes **two curated mini datasets**, each with **14 small `.mgf` files**:
 
